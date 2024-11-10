@@ -1,8 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -13,18 +11,11 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
-import authApiRequest from "@/apiRequests/auth";
-import { clientSessionToken } from "@/lib/http";
 
 export default function LoginForm() {
-    const { toast } = useToast();
-    const router = useRouter()
     // 1. Define your form.
-    const form = useForm<LoginBodyType>({
-        resolver: zodResolver(LoginBody),
+    const form = useForm({
+        // resolver: zodResolver(LoginBody),
         defaultValues: {
             email: "",
             password: "",
@@ -32,36 +23,8 @@ export default function LoginForm() {
     });
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof LoginBody>) {
-        try {
-            const result = await authApiRequest.login(values)
-            toast({
-              description: result.payload.message
-            });
-            await authApiRequest.auth({sessionToken: result.payload.data.token})
-            clientSessionToken.value =  result.payload.data.token
-            router.push('/me')
-        } catch (error: any) {
-            const errors = error.payload.errors as {
-                field: string;
-                message: string;
-            }[];
-            const status = error.status as number;
-            if (status === 422) {
-                errors.forEach((error) => {
-                    form.setError(error.field as "email" | "password", {
-                        type: "server",
-                        message: error.message,
-                    });
-                });
-            } else {
-                toast({
-                    title: "Error",
-                    description: error.payload.message,
-                    variant: "destructive",
-                });
-            }
-        }
+    async function onSubmit() {
+        
     }
     return (
         <div className="flex justify-center">

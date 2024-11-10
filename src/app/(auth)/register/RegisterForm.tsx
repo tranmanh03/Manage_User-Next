@@ -13,19 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { RegisterBody, RegisterBodyType } from "@/schemaValidations/auth.schema"
-import authApiRequest from "@/apiRequests/auth"
-import { useToast } from "@/hooks/use-toast"
-import { useRouter } from "next/navigation"
-import { clientSessionToken } from "@/lib/http"
  
 
 export default function RegisterForm() {
-    const { toast } = useToast();
-    const router = useRouter()
   // 1. Define your form.
-  const form = useForm<RegisterBodyType>({
-    resolver: zodResolver(RegisterBody),
+  const form = useForm({
+    // resolver: zodResolver(),
     defaultValues: {
       email: '',
       name: '',
@@ -35,37 +28,8 @@ export default function RegisterForm() {
   })
  
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof RegisterBody>) {
+  async function onSubmit() {
 
-    try {
-      const result = await authApiRequest.register(values)
-      toast({
-        description: result.payload.message
-      });
-      await authApiRequest.auth({sessionToken: result.payload.data.token})
-      clientSessionToken.value = result.payload.data.token
-      router.push('/login')
-  } catch (error: any) {
-      const errors = error.payload.errors as {
-          field: string;
-          message: string;
-      }[];
-      const status = error.status as number;
-      if (status === 422) {
-          errors.forEach((error) => {
-              form.setError(error.field as "email" | "password", {
-                  type: "server",
-                  message: error.message,
-              });
-          });
-      } else {
-          toast({
-              title: "Error",
-              description: error.payload.message,
-              variant: "destructive",
-          });
-      }
-  }
   }
   return (
     <div className="flex justify-center"> 
