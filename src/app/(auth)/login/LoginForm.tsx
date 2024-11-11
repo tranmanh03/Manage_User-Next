@@ -23,13 +23,16 @@ export default function LoginForm() {
     });
 
     // 2. Define a submit handler.
-    async function onSubmit() {
-        
-    }
+    async function onSubmit() {}
     return (
         <div className="flex justify-center">
             <Form {...form}>
                 <form
+                    style={{
+                        border: "1px solid #ccc",
+                        padding: "24px",
+                        borderRadius: "5px",
+                    }}
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-2 max-w-[500px] w-full"
                 >
@@ -67,7 +70,7 @@ export default function LoginForm() {
                         )}
                     />
                     <div className="flex justify-center content-center !mt-4">
-                        <Button type="submit" className="w-full">
+                        <Button type="submit" className="w-full bg-dark">
                             Đăng Nhập
                         </Button>
                     </div>

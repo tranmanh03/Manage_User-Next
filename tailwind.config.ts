@@ -15,6 +15,7 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			666: "#666",
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -62,9 +63,24 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		width: {
+			"1250": "1250px",
+			"400": "400px",
+		},
+		height: {
+			"225" : "225px"
+		},
+		minWidth: {
+			"100": "100px"
+		},
+		backgroundColor: {
+			second: "#ad9e87"
+		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	require("tailwindcss-animate"),
+  ],
 };
 export default config;

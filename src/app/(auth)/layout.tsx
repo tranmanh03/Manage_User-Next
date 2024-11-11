@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function AuthLayout({
     children,
   }: Readonly<{
@@ -7,7 +5,6 @@ export default function AuthLayout({
   }>) {
     return (
         <div>
-            <Link href={'/'}>Home</Link>
             {children}
         </div>
     );
