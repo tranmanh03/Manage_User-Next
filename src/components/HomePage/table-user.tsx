@@ -45,6 +45,7 @@ export default function TableUser(props: Iprops) {
                     <TableHead className="w-[100px]">ID</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Username</TableHead>
+                    <TableHead>Password</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead className="text-center">Actions</TableHead>
                 </TableRow>
@@ -55,6 +56,7 @@ export default function TableUser(props: Iprops) {
                         <TableCell className="font-medium">{user.id}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.name}</TableCell>
+                        <TableCell>{user.password}</TableCell>
                         <TableCell>{user.role}</TableCell>
                         <TableCell className="text-center">
                             <Button className="bg-cyan-500 hover:bg-cyan-400 mr-2" onClick={() => handleClickBtnUpdate(user)}>

@@ -45,7 +45,7 @@ function Modals(props: IProps) {
         setEmail("");
         setName("");
         setPassword("");
-        setRole("USER");
+        setRole("");
         setIsFormAddUser(false);
         if (isFormUpdateUser) {
             setIsFormUpdateUser(false);
@@ -80,7 +80,7 @@ function Modals(props: IProps) {
             setEmail("");
             setName("");
             setPassword("");
-            setRole("USER");
+            setRole("");
             toast({
                 description: res.message,
                 className: "bg-blue-500",
@@ -113,10 +113,10 @@ function Modals(props: IProps) {
         }
         const res = await updateUser(
             dataUpdate.id,
-            dataUpdate.email,
-            dataUpdate.name,
-            dataUpdate.password,
-            dataUpdate.password
+            email,
+            name,
+            password,
+            role
         );
         if (res && res.statusCode === 200) {
             toast({

@@ -25,7 +25,7 @@ export default function ManageUserPage() {
     };
 
     return (
-        <div className="flex justify-center items-center flex-col mt-12">
+        <div className="flex justify-center items-center flex-col mt-28">
             <div className="w-1250 flex justify-between">
                 <h1 className="text-4xl font-medium">Manage User</h1>
                 <Button

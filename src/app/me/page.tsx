@@ -1,11 +1,9 @@
-import Profile from './profile';
+import Profile from "./profile";
 
 export default async function page() {
-      
     return (
         <div>
-          Welcome ... to website.
-          <Profile />
+            <Profile />
         </div>
-    )
+    );
 }

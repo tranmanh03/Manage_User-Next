@@ -1,8 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -13,8 +11,17 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { register } from "@/service/apiService";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     // 1. Define your form.
     const form = useForm({
         // resolver: zodResolver(),
@@ -27,7 +34,47 @@ export default function RegisterForm() {
     });
 
     // 2. Define a submit handler.
-    async function onSubmit() {}
+    async function onSubmit() {
+        if (!email) {
+            toast({
+                description: "Not empty email",
+            });
+            return;
+        }
+        if (!name) {
+            toast({
+                description: "Not empty name",
+            });
+            return;
+        }
+        if (!password) {
+            toast({
+                description: "Not empty password",
+            });
+            return;
+        }
+        if (!confirmPassword) {
+            toast({
+                description: "Not empty confirmPassword",
+            });
+            return;
+        }
+        if (password !== confirmPassword) {
+            toast({
+                description: "password not equal confirmPassword",
+            });
+            return;
+        }
+        const res = await register(email, name, password, "USER");
+        if (res && res.statusCode === 200) {
+            toast({
+                description: res.message,
+                className: "bg-green-500",
+                color: "text-white",
+            });
+            router.push("/login");
+        }
+    }
     return (
         <div className="flex justify-center">
             <Form {...form}>
@@ -50,6 +97,10 @@ export default function RegisterForm() {
                                     <Input
                                         placeholder="Nhập email"
                                         {...field}
+                                        value={email}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -66,6 +117,10 @@ export default function RegisterForm() {
                                     <Input
                                         placeholder="Nhập họ tên"
                                         {...field}
+                                        value={name}
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -83,6 +138,10 @@ export default function RegisterForm() {
                                         placeholder="Nhập mật khẩu"
                                         type="password"
                                         {...field}
+                                        value={password}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -100,6 +159,10 @@ export default function RegisterForm() {
                                         placeholder="Nhập lại mật khẩu"
                                         type="password"
                                         {...field}
+                                        value={confirmPassword}
+                                        onChange={(e) =>
+                                            setConfirmPassword(e.target.value)
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
