@@ -17,11 +17,13 @@ import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import authApiRequest from "@/apiRequests/auth";
-import { clientSessionToken } from "@/lib/http";
+import { handleErrorApi } from "@/lib/utils";
+import { useState } from "react";
 
 export default function LoginForm() {
+    const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
-    const router = useRouter()
+    const router = useRouter();
     // 1. Define your form.
     const form = useForm<LoginBodyType>({
         resolver: zodResolver(LoginBody),
@@ -33,34 +35,24 @@ export default function LoginForm() {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof LoginBody>) {
+        if (isLoading) return;
+        setIsLoading(true);
         try {
-            const result = await authApiRequest.login(values)
+            const result = await authApiRequest.login(values);
             toast({
-              description: result.payload.message
+                description: result.payload.message,
             });
-            await authApiRequest.auth({sessionToken: result.payload.data.token})
-            clientSessionToken.value =  result.payload.data.token
-            router.push('/me')
+            await authApiRequest.auth({
+                sessionToken: result.payload.data.token,
+            });
+            router.push("/me");
         } catch (error: any) {
-            const errors = error.payload.errors as {
-                field: string;
-                message: string;
-            }[];
-            const status = error.status as number;
-            if (status === 422) {
-                errors.forEach((error) => {
-                    form.setError(error.field as "email" | "password", {
-                        type: "server",
-                        message: error.message,
-                    });
-                });
-            } else {
-                toast({
-                    title: "Error",
-                    description: error.payload.message,
-                    variant: "destructive",
-                });
-            }
+            handleErrorApi({
+                error,
+                setError: form.setError,
+            });
+        } finally {
+            setIsLoading(false);
         }
     }
     return (
