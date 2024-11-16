@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import Profile from "./profile";
 import accountApiRequest from "@/apiRequests/account";
+import ProfileUpdateForm from "./profile-form";
 
 export default async function page() {
     const cookieStore = await cookies();
@@ -12,6 +12,7 @@ export default async function page() {
         <div>
             Welcome {result.payload.data.name} to website.
             {/* <Profile /> */}
+            <ProfileUpdateForm profile={result.payload.data} />
         </div>
     );
 }

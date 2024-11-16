@@ -8,7 +8,7 @@ export default function Header() {
             <ul>
                 <ButtonLogout />
                 <li>
-                    <Link href={"/login"}>Đăng nhập</Link>
+                    <Link href={"/product/add"}>Tao san pham</Link>
                 </li>
                 <li>
                     <Link href={"/register"}>Đăng ký</Link>
