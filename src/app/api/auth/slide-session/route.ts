@@ -2,21 +2,6 @@ import authApiRequest from "@/apiRequests/auth";
 import { HttpError } from "@/lib/http";
 import { cookies } from "next/headers";
 export async function POST(request: Request) {
-    const res = await request.json();
-    const force = res.force as boolean | undefined;
-    if (force) {
-        return Response.json(
-            {
-                message: "Buộc đăng xuất thành công",
-            },
-            {
-                status: 200,
-                headers: {
-                    "Set-Cookie": `sessionToken=; Path=/; HttpOnly; Max-Age=0`,
-                },
-            }
-        );
-    }
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
     if (!sessionToken) {
@@ -28,13 +13,16 @@ export async function POST(request: Request) {
         );
     }
     try {
-        const result = await authApiRequest.logoutFromNextServerToServer(
+        const res = await authApiRequest.slideSessionFromNextServerToServer(
             sessionToken.value
         );
-        return Response.json(result.payload, {
+        const newExpiresDate = new Date(
+            res.payload.data.expiresAt
+        ).toUTCString();
+        return Response.json(res.payload, {
             status: 200,
             headers: {
-                "Set-Cookie": `sessionToken=; Path=/; HttpOnly; Max-Age=0`,
+                "Set-Cookie": `sessionToken=${sessionToken.value}; Path=/; HttpOnly; Expires=${newExpiresDate}; SameSite=Lax; Secure`,
             },
         });
     } catch (error) {

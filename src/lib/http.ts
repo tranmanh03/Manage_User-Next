@@ -1,12 +1,15 @@
 import envConfig from "../../config";
 import { LoginResType } from "@/schemaValidations/auth.schema";
 import { normalizePath } from "./utils";
+import { redirect } from "next/navigation";
 
 type CustomOptions = Omit<RequestInit, "method"> & {
     baseUrl?: string | undefined;
 };
 
 const ENTITY_ERROR_STATUS = 422;
+const AUTHENTICATION_ERROR_STATUS = 401;
+
 type EntityErrorPayload = {
     message: string;
     errors: {
@@ -45,6 +48,7 @@ export class EntityError extends HttpError {
 
 class SessionToken {
     private token = "";
+    private _expiresAt = new Date().toISOString();
     get value() {
         return this.token;
     }
@@ -54,6 +58,17 @@ class SessionToken {
             throw new Error("Cannot set token on server side");
         }
         this.token = token;
+    }
+
+    get expiresAt() {
+        return this._expiresAt;
+    }
+    set expiresAt(expiresAt: string) {
+        // Nếu gọi method này ở server thì sẽ bị lỗi
+        if (typeof window === "undefined") {
+            throw new Error("Cannot set token on server side");
+        }
+        this._expiresAt = expiresAt;
     }
 }
 export const clientSessionToken = new SessionToken();
@@ -101,6 +116,24 @@ const request = async <Response>(
                     payload: EntityErrorPayload;
                 }
             );
+        } else if (res.status === AUTHENTICATION_ERROR_STATUS) {
+            if (typeof window !== "undefined") {
+                await fetch("/api/auth/logout", {
+                    method: "POST",
+                    body: JSON.stringify({ force: true }),
+                    headers: {
+                        ...baseHeaders,
+                    },
+                });
+                clientSessionToken.value = "";
+                clientSessionToken.expiresAt = new Date().toISOString();
+                location.href = "/login";
+            } else {
+                const sessionToken = (
+                    options?.headers as any
+                )?.Authorization.split(" ")[1];
+                redirect(`/logout?sessionToken=${sessionToken}`);
+            }
         } else {
             throw new HttpError(data);
         }
@@ -112,8 +145,12 @@ const request = async <Response>(
             )
         ) {
             clientSessionToken.value = (payload as LoginResType).data.token;
+            clientSessionToken.expiresAt = (
+                payload as LoginResType
+            ).data.expiresAt;
         } else if ("auth/logout" === normalizePath(url)) {
             clientSessionToken.value = "";
+            clientSessionToken.expiresAt = new Date().toISOString();
         }
     }
     return data;

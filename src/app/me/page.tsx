@@ -11,7 +11,7 @@ export default async function page() {
     return (
         <div>
             Welcome {result.payload.data.name} to website.
-            <Profile />
+            {/* <Profile /> */}
         </div>
     );
 }

@@ -39,11 +39,12 @@ export default function LoginForm() {
         setIsLoading(true);
         try {
             const result = await authApiRequest.login(values);
-            toast({
-                description: result.payload.message,
-            });
             await authApiRequest.auth({
                 sessionToken: result.payload.data.token,
+                expiresAt: result.payload.data.expiresAt,
+            });
+            toast({
+                description: result.payload.message,
             });
             router.push("/me");
         } catch (error: any) {
