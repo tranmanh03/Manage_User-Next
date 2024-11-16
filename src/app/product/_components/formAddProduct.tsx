@@ -94,6 +94,7 @@ export default function FormAddProduct({ product }: { product?: Product }) {
             toast({
                 description: result.payload.message,
             });
+            router.push("/product");
         } catch (error: any) {
             handleErrorApi({
                 error,

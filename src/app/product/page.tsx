@@ -2,9 +2,14 @@ import productApiRequest from "@/apiRequests/product";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import ButtonDelete from "./_components/button-delete";
+import { cookies } from "next/headers";
 export default async function ProductListPage() {
+    const cookiStore = await cookies();
+    const sessionToken = cookiStore.get("sessionToken")?.value;
     const { payload } = await productApiRequest.get();
     const productList = payload.data;
+
     return (
         <div>
             <h1>Product List</h1>
@@ -20,12 +25,14 @@ export default async function ProductListPage() {
                         />
                         <h3>{product.name}</h3>
                         <div>{product.price}</div>
-                        <div className="flex space-x-2">
-                            <Link href={`/product/${product.id}`}>
-                                <Button variant="outline">Edit</Button>
-                            </Link>
-                            <Button variant={"destructive"}>Delete</Button>
-                        </div>
+                        {Boolean(sessionToken) && (
+                            <div className="flex space-x-2">
+                                <Link href={`/product/${product.id}`}>
+                                    <Button variant="outline">Edit</Button>
+                                </Link>
+                                <ButtonDelete id={product.id} />
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

@@ -6,8 +6,9 @@ import Header from "@/components/ui/header";
 import { Toaster } from "@/components/ui/toaster";
 import AppProvider from "@/AppProvider";
 import { cookies } from "next/headers";
-import Link from "next/link";
 import SlideSession from "@/components/slide-session";
+import accountApiRequest from "@/apiRequests/account";
+import { AccountResType } from "@/schemaValidations/account.schema";
 
 const inter = Inter({ subsets: ["vietnamese"] });
 export const metadata: Metadata = {
@@ -22,6 +23,11 @@ export default async function RootLayout({
 }>) {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("sessionToken");
+    let user: AccountResType["data"] | null = null;
+    if (sessionToken) {
+        const data = await accountApiRequest.me(sessionToken?.value);
+        user = data.payload.data;
+    }
 
     return (
         <html lang="en" suppressHydrationWarning>
@@ -33,9 +39,11 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Header />
-                    <Link href="/me">Profile</Link>
-                    <AppProvider inititalSessionToken={sessionToken?.value}>
+                    <AppProvider
+                        inititalSessionToken={sessionToken?.value}
+                        user={user}
+                    >
+                        <Header user={user} />
                         {children}
                         <SlideSession />
                     </AppProvider>

@@ -60,6 +60,7 @@ export default function RegisterForm() {
             });
         } finally {
             setIsLoading(false);
+            router.refresh();
         }
     }
     return (

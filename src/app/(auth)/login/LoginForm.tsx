@@ -54,6 +54,7 @@ export default function LoginForm() {
             });
         } finally {
             setIsLoading(false);
+            router.refresh();
         }
     }
     return (

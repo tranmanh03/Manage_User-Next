@@ -19,6 +19,9 @@ export default function ButtonLogout() {
                 .then((res) => {
                     router.push(`/login?redirectFrom=${pathname}`);
                 });
+            router.refresh();
+        } finally {
+            router.refresh();
         }
     };
     return (
