@@ -1,13 +1,13 @@
+import { Metadata } from "next";
 
-
-// const isAuth = false
+export const metadata: Metadata = {
+    title: "Home Page ",
+    description: "Trang chủ",
+};
 
 export default function Home() {
-  // if(!isAuth) {
-  //   redirect('/login')
-  // }
-  return (
-    <>
-    </>
-  );
+    // if(!isAuth) {
+    //   redirect('/login')
+    // }
+    return <></>;
 }

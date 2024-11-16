@@ -1,9 +1,15 @@
+import { Metadata } from "next";
 import productApiRequest from "@/apiRequests/product";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import ButtonDelete from "./_components/button-delete";
 import { cookies } from "next/headers";
+
+export const metadata: Metadata = {
+    title: "Productic",
+};
+
 export default async function ProductListPage() {
     const cookiStore = await cookies();
     const sessionToken = cookiStore.get("sessionToken")?.value;
@@ -16,18 +22,20 @@ export default async function ProductListPage() {
             <div className="space-y-5">
                 {productList.map((product) => (
                     <div key={product.id} className="flex space-x-4">
-                        <Image
-                            src={product.image}
-                            alt={product.name}
-                            width={180}
-                            height={180}
-                            className="w-32 h-32 object-cover"
-                        />
+                        <Link href={`/product/${product.id}`}>
+                            <Image
+                                src={product.image}
+                                alt={product.name}
+                                width={180}
+                                height={180}
+                                className="w-32 h-32 object-cover"
+                            />
+                        </Link>
                         <h3>{product.name}</h3>
                         <div>{product.price}</div>
                         {Boolean(sessionToken) && (
                             <div className="flex space-x-2">
-                                <Link href={`/product/${product.id}`}>
+                                <Link href={`/product/edit/${product.id}`}>
                                     <Button variant="outline">Edit</Button>
                                 </Link>
                                 <ButtonDelete id={product.id} />
