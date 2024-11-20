@@ -11,6 +11,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const id = params.id;
     const router = useRouter();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const initService = [
         { service: "Ăn sáng", quantity: 2, price: 10 },
         { service: "Ăn tối", quantity: 2, price: 20 },

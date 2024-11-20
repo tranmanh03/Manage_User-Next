@@ -1,5 +1,5 @@
 "use client";
-import { Calendar, User, CheckCircle, Check, Clock, X } from "lucide-react";
+import { Calendar, User, CheckCircle, Check, X } from "lucide-react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 

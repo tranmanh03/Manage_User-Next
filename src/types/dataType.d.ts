@@ -1,5 +1,5 @@
 interface ImageView {
-    imgView: any;
+    imgView: unknown;
     category: string;
     promotionTTL: string;
     promotionCopy: string;
