@@ -61,23 +61,10 @@ export default function ProfileUpdateForm({ profile }: { profile: any }) {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-2 max-w-[500px] w-full"
                 >
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Mật khẩu</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="email"
-                                        value={profile.email}
-                                        readOnly
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <FormControl>
+                        <FormLabel>Mật khẩu</FormLabel>
+                        <Input type="email" value={profile.email} readOnly />
+                    </FormControl>
                     <FormField
                         control={form.control}
                         name="name"
