@@ -1,0 +1,28 @@
+{
+  "HomePage": {
+    "titleH1_1": "Special offer from",
+    "titleH1_2": "LOTTE HOTEL HANOI",
+    "khachSanLotte": "LOTTE HOTEL HANOI",
+      "promotion1": "Winter Vacation Package Full of Love",
+      "promotionCopy1": "Deluxe Room | Complimentary pastries | Complimentary sparkling wine | 20% off spa services",
+      "promotionDate1": "18/10/2024 - 31/12/2024",
+      "promotionDate2": "20/10/2024 - 20/10/2024",
+      "promotion2": "Explore the Sports Bar entertainment space now!",
+      "promotionCopy2": "The familiar Upper area has been transformed into an energetic playground with many exciting and extremely lively games.",
+      "promotion3": "Love Is In The Air Menu at Grill63",
+      "promotionCopy3": "Let Grill63 become a paradise to mark your and your lover's happy journey.",
+      "Stay": " Stay",
+      "Booking": "Booking",
+      "Time": "Time"
+  },
+  "Header": {
+    "Home": "Home",
+    "Admin": "Admin",
+    "Manage_User": "Manage User",
+    "Profile": "Profile",
+    "Login": "Login",
+    "Logout": "Logout",
+    "Register": "Register"
+  },
+  "Footer": "Copyright by duymanh 2003."
+}

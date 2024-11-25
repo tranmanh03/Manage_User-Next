@@ -1,0 +1,28 @@
+{
+  "HomePage": {
+    "titleH1_1": "Ưu đãi đặc biệt từ",
+    "titleH1_2": "KHÁCH SẠN LOTTE HÀ NỘI",
+      "khachSanLotte": "Khách sạn LOTTE Hà Nội",
+      "promotion1": "Gói nghỉ dưỡng Mùa đông ngập tràn yêu thương",
+      "promotionCopy1": "Phòng Deluxe | Bánh ngọt miễn phí | Rượu vang sủi tặng kèm | Giảm 20% dịch vụ spa",
+      "promotionDate1": "18/10/2024 - 31/12/2024",
+      "promotionDate2": "20/10/2024 - 20/10/2024",
+      "promotion2": "Khám phá ngay không gian giải trí Sports Bar!",
+      "promotionCopy2": "Khu vực Upper quen thuộc đã được biến hóa thành một sân chơi tràn đầy năng lượng với nhiều trò chơi hấp dẫn và cực kỳ sống động.",
+      "promotion3": "Thực đơn Love Is In The Air tại Grill63",
+      "promotionCopy3": "Hãy để Grill63 trở thành thiên đường ghi dấu hành trình hạnh phúc của bạn và người ấy.",
+      "Stay": " Ở lại",
+      "Booking": "Đặt phòng",
+      "Time": "Thời gian"
+  },
+  "Header": {
+    "Home": "Trang chủ",
+    "Admin": "Quản trị viên",
+    "Manage_User": "Quản lí người dùng",
+    "Profile": "Trang cá nhân",
+    "Login": "Đăng nhập",
+    "Logout": "Đăng xuất",
+    "Register": "Đăng ký"
+  },
+  "Footer": "Bản quyền duymanh 2003."
+}
